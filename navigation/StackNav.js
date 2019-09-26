@@ -1,7 +1,7 @@
 import { createStackNavigator } from "react-navigation-stack";
 
+import Home from "../components/Home";
 import Login from "../components/Login";
-import CarList from "../components/CarList";
 import BottomTab from "./BottomTab";
 import SignupScreen from "../components/Signup";
 

@@ -32,48 +32,29 @@ import CartButton from "../Buttons/CartButton";
 
 class CarDetail extends Component {
   state = {
-    manufacturer: this.props.navigation.getParam("car", {}).manufacturer,
-    model: this.props.navigation.getParam("car", {}).model,
-    color: this.props.navigation.getParam("car", {}).color,
-    gear: this.props.navigation.getParam("car", {}).gear,
-    year: this.props.navigation.getParam("car", {}).year,
-    milage: this.props.navigation.getParam("car", {}).milage,
-    price: this.props.navigation.getParam("car", {}).price,
-    image: this.props.navigation.getParam("car", {}).image,
-    quantity: 1
+    item: null
   };
-
-  changeDrink = value => {
-    this.setState({
-      drink: value
-    });
-  };
-
-  changeOption = value => {
-    this.setState({
-      option: value
-    });
+  componentWillMount = () => {
+    this.setState({ item: this.props.navigation.getParam("item") });
   };
 
   handleAdd = () => {
-    cartStore.addItemToCart(this.state);
+    cartStore.addItemToCart(this.state.item);
   };
 
   render() {
-    const car = this.props.navigation.getParam("car", {});
-    console.log("[CarDetail.js] car: ", car);
     return (
       <Container>
         <Content>
           <Card style={{ flex: 0 }}>
             <CardItem>
               <Left>
-                <Thumbnail source={{ uri: car.image }} />
+                <Thumbnail source={{ uri: this.state.item.image }} />
                 <Body>
                   <Text style={styles.text}>
-                    {car.manufacturer}
+                    {this.state.item.manufacturer}
                     {"\n"}
-                    {car.model}
+                    {this.state.item.model}
                   </Text>
                   <Text note>April 15, 2016</Text>
                 </Body>
@@ -82,20 +63,22 @@ class CarDetail extends Component {
             <CardItem>
               <Body>
                 <Image
-                  source={{ uri: car.image }}
+                  source={{ uri: this.state.item.image }}
                   style={{ height: 250, width: 400, flex: 1 }}
                 />
                 <Text>
-                  {"\n"}This {car.year} {car.maker} {car.model} comes with a
-                  milage of {car.milage}.
+                  {"\n"}This {this.state.item.year} {this.state.item.maker}{" "}
+                  {this.state.item.model} comes with a milage of{" "}
+                  {this.state.item.milage}.
                 </Text>
                 <Text style={styles.textlist}>
-                  {"\n"}Color: {car.color}
+                  {"\n"}Color: {this.state.item.color}
                 </Text>
-                <Text style={styles.textlist}>Gear: {car.gear}</Text>
-                <Text style={styles.textlist}>Seats: {car.seats}</Text>
                 <Text style={styles.textlist}>
-                  Price: KD {car.price + "\n"}
+                  Gear: {this.state.item.gear}
+                </Text>
+                <Text style={styles.textlist}>
+                  Price: KD {this.state.item.price + "\n"}
                 </Text>
               </Body>
             </CardItem>
@@ -110,7 +93,7 @@ class CarDetail extends Component {
                 <Button
                   full
                   danger
-                  onPress={() => cartStore.addItemToCart(this.state)}
+                  onPress={() => cartStore.addItemToCart(this.state.item)}
                 >
                   <Text>Add To Cart</Text>
                 </Button>

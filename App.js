@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Spinner } from "native-base";
 import AppContainer from "./navigation";
-
 class App extends Component {
   state = {
     loading: true

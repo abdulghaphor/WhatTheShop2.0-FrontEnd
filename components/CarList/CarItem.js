@@ -22,19 +22,14 @@ import cartStore from "../../stores/cartStore";
 
 class CarItem extends Component {
   state = {
-    manufacturer: this.props.navigation.getParam("car", {}).manufacturer,
-    model: this.props.navigation.getParam("car", {}).model,
-    color: this.props.navigation.getParam("car", {}).color,
-    gear: this.props.navigation.getParam("car", {}).gear,
-    year: this.props.navigation.getParam("car", {}).year,
-    milage: this.props.navigation.getParam("car", {}).milage,
-    price: this.props.navigation.getParam("car", {}).price,
-    image: this.props.navigation.getParam("car", {}).image,
-    quantity: 1
+    item: null
+  };
+  componentWillMount = () => {
+    this.setState({ item: this.props.item });
   };
   handlePress = () => {
     this.props.navigation.navigate("CarDetail", {
-      car: this.props.car
+      item: this.state.item
     });
   };
   handleAdd = () => {
@@ -42,7 +37,6 @@ class CarItem extends Component {
   };
 
   render() {
-    const { car } = this.props;
     return (
       <ListItem button onPress={this.handlePress} style={styles.listitem}>
         <Card style={styles.transparent}>
@@ -50,21 +44,19 @@ class CarItem extends Component {
             <Left>
               <Thumbnail
                 bordered
-                source={{ uri: car.image }}
+                source={{ uri: this.state.item.image }}
                 style={styles.thumbnail}
               />
-              <Text style={styles.textlist}>{car.manufacturer}</Text>
-              <Text note style={styles.textlist}>
-                {car.model}
+              <Text style={styles.textlist}>
+                {this.state.item.manufacturer}
               </Text>
-              <Text style={styles.textlist}>{car.color}</Text>
-              <Text style={styles.textlist}>{car.year}</Text>
+              <Text note style={styles.textlist}>
+                {this.state.item.model}
+              </Text>
+              <Text style={styles.textlist}>{this.state.item.color}</Text>
+              <Text style={styles.textlist}>{this.state.item.year}</Text>
             </Left>
-            <Right>
-              {/* <Button small transparent onPress={() => this.handleAdd()}>
-                <Text>Add To Cart</Text>
-              </Button> */}
-            </Right>
+            <Right></Right>
           </CardItem>
         </Card>
       </ListItem>
