@@ -31,30 +31,20 @@ import CartButton from "../Buttons/CartButton";
 // Components
 
 class CarDetail extends Component {
-  state = {
-    item: null
-  };
-  componentWillMount = () => {
-    this.setState({ item: this.props.navigation.getParam("item") });
-  };
-
-  handleAdd = () => {
-    cartStore.addItemToCart(this.state.item);
-  };
-
   render() {
+    const item = this.props.navigation.getParam("item");
     return (
       <Container>
         <Content>
           <Card style={{ flex: 0 }}>
             <CardItem>
               <Left>
-                <Thumbnail source={{ uri: this.state.item.image }} />
+                <Thumbnail source={{ uri: item.image }} />
                 <Body>
                   <Text style={styles.text}>
-                    {this.state.item.manufacturer}
+                    {item.manufacturer}
                     {"\n"}
-                    {this.state.item.model}
+                    {item.model}
                   </Text>
                   <Text note>April 15, 2016</Text>
                 </Body>
@@ -63,22 +53,19 @@ class CarDetail extends Component {
             <CardItem>
               <Body>
                 <Image
-                  source={{ uri: this.state.item.image }}
+                  source={{ uri: item.image }}
                   style={{ height: 250, width: 400, flex: 1 }}
                 />
                 <Text>
-                  {"\n"}This {this.state.item.year} {this.state.item.maker}{" "}
-                  {this.state.item.model} comes with a milage of{" "}
-                  {this.state.item.milage}.
+                  {"\n"}This {item.year} {item.manufacturer} {item.model} comes
+                  with a milage of {item.milage}.
                 </Text>
                 <Text style={styles.textlist}>
-                  {"\n"}Color: {this.state.item.color}
+                  {"\n"}Color: {item.color}
                 </Text>
+                <Text style={styles.textlist}>Gear: {item.gear}</Text>
                 <Text style={styles.textlist}>
-                  Gear: {this.state.item.gear}
-                </Text>
-                <Text style={styles.textlist}>
-                  Price: KD {this.state.item.price + "\n"}
+                  Price: KD {item.price + "\n"}
                 </Text>
               </Body>
             </CardItem>
@@ -93,7 +80,7 @@ class CarDetail extends Component {
                 <Button
                   full
                   danger
-                  onPress={() => cartStore.addItemToCart(this.state.item)}
+                  onPress={() => cartStore.addItemToCart(item)}
                 >
                   <Text>Add To Cart</Text>
                 </Button>

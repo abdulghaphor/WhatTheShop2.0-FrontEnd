@@ -12,32 +12,29 @@ import {
   Thumbnail
 } from "native-base";
 import styles from "../CarList/styles";
+import cartStore from "../../stores/cartStore";
+
 class CartItem extends Component {
-  state = {
-    item: null
-  };
-  componentWillMount = () => {
-    this.setState({ item: this.props.item });
-  };
   render() {
+    const item = this.props.item;
     return (
       <ListItem style={{ borderBottomWidth: 0 }}>
         <Left>
           <Thumbnail
             bordered
-            source={{ uri: this.state.item.image }}
+            source={{ uri: item.image }}
             style={styles.thumbnail}
           />
           <Text style={{ color: "black", marginLeft: 16 }}></Text>
           <Text note style={{ marginLeft: 16 }}>
-            {this.state.item.price}
+            {item.price}
           </Text>
         </Left>
         <Body></Body>
         <Right>
           <Button
             transparent
-            onPress={() => this.props.onDelete(this.state.item)}
+            onPress={() => cartStore.removeItemFromCart(item)}
           >
             <Icon name="trash" style={{ color: "blue", fontSize: 21 }} />
           </Button>

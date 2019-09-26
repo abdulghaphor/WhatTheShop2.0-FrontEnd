@@ -5,14 +5,11 @@ class CartStore {
   items = [];
   loading = true;
 
-  updateCart = async () => {
+  fetchCart = async () => {
     try {
       const res = await axios.get("http://muffinbase.com/cart/");
       let hello = res.data;
-      this.items = [];
-      hello.cart_items.map(item =>
-        this.items.push(carStore.getCarById(item.product))
-      );
+      this.items = hello.cart_items;
       this.loading = false;
     } catch (err) {
       console.error(err.stack);
@@ -20,14 +17,17 @@ class CartStore {
   };
 
   addItemToCart = async item => {
-    try {
-      const res = await axios.post("http://muffinbase.com/cart/", {
-        product: item.id
-      });
-      this.items.push(item);
-      this.loading = false;
-    } catch (err) {
-      console.error(err.response.data);
+    const exists = this.items.find(cartItem => cartItem.id === item.id);
+    if (!exists) {
+      try {
+        const res = await axios.post("http://muffinbase.com/cart/", {
+          product: item.id
+        });
+        this.items.push(item);
+        this.loading = false;
+      } catch (err) {
+        console.error(err.response.data);
+      }
     }
   };
 

@@ -7,29 +7,9 @@ import cartStore from "../../stores/cartStore";
 import authStore from "../../stores/authStore";
 
 class CarCart extends Component {
-  state = {
-    items: []
-  };
-  handleDelete = deletedItem => {
-    cartStore.removeItemFromCart(deletedItem);
-    const items = this.state.items.filter(item => item.id !== deletedItem.id);
-    this.setState({ items: items });
-  };
-  handleCheckout = async () => {
-    console.log("handlecheckout");
-    let xxx = await cartStore.checkoutCart();
-    if (xxx) {
-      this.setState({ items: [] });
-    }
-  };
-  componentWillMount = () => {
-    if (authStore.user && cartStore.loading === false) {
-      this.setState({ items: cartStore.items });
-    }
-  };
   render() {
-    cartItems = this.state.items.map(item => (
-      <CartItem item={item} key={item.id} onDelete={this.handleDelete} />
+    const cartItems = cartStore.items.map(item => (
+      <CartItem item={item} key={item.id} />
     ));
 
     return (

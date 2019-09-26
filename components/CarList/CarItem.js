@@ -14,40 +14,34 @@ import { withNavigation } from "react-navigation";
 import cartStore from "../../stores/cartStore";
 
 class CarItem extends Component {
-  state = {
-    item: null
-  };
-  componentWillMount = () => {
-    this.setState({ item: this.props.item });
-  };
-  handlePress = () => {
+  handlePress = item => {
     this.props.navigation.navigate("CarDetail", {
-      item: this.state.item
+      item: item
     });
-  };
-  handleAdd = () => {
-    cartStore.addItemToCart(this.state);
   };
 
   render() {
+    const item = this.props.item;
     return (
-      <ListItem button onPress={this.handlePress} style={styles.listitem}>
+      <ListItem
+        button
+        onPress={() => this.handlePress(item)}
+        style={styles.listitem}
+      >
         <Card style={styles.transparent}>
           <CardItem style={styles.transparent}>
             <Left>
               <Thumbnail
                 bordered
-                source={{ uri: this.state.item.image }}
+                source={{ uri: item.image }}
                 style={styles.thumbnail}
               />
-              <Text style={styles.textlist}>
-                {this.state.item.manufacturer}
-              </Text>
+              <Text style={styles.textlist}>{item.manufacturer}</Text>
               <Text note style={styles.textlist}>
-                {this.state.item.model}
+                {item.model}
               </Text>
-              <Text style={styles.textlist}>{this.state.item.color}</Text>
-              <Text style={styles.textlist}>{this.state.item.year}</Text>
+              <Text style={styles.textlist}>{item.color}</Text>
+              <Text style={styles.textlist}>{item.year}</Text>
             </Left>
             <Right></Right>
           </CardItem>

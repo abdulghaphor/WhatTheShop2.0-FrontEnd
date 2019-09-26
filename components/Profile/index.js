@@ -11,7 +11,7 @@ class Profile extends Component {
   componentWillMount = () => {
     if (authStore.user) {
       profileStore.fetchProfile();
-      cartStore.updateCart();
+      cartStore.fetchCart();
     }
   };
   render() {
