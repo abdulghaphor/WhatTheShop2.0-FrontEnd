@@ -15,7 +15,7 @@ class CarStore {
     }
   };
   getCarById = id => {
-    return this.cars.find(car => cartItem.id == item.model);
+    return this.cars.find(car => car.id == id);
   };
 }
 decorate(CarStore, {

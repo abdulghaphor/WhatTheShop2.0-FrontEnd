@@ -5,10 +5,14 @@ import { observer } from "mobx-react";
 import { Card, CardItem, Text, Button, Header, Spinner } from "native-base";
 import authStore from "../../stores/authStore";
 import profileStore from "../../stores/profileStore";
+import cartStore from "../../stores/cartStore";
 
 class Profile extends Component {
-  componentDidMount = () => {
-    if (authStore.user) profileStore.fetchProfile();
+  componentWillMount = () => {
+    if (authStore.user) {
+      profileStore.fetchProfile();
+      cartStore.updateCart();
+    }
   };
   render() {
     if (!authStore.user) this.props.navigation.replace("Signup");

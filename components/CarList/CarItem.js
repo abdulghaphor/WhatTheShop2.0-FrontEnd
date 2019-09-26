@@ -1,7 +1,4 @@
 import React, { Component } from "react";
-import { ImageBackground, View } from "react-native";
-
-// NativeBase Components
 import {
   ListItem,
   Card,
@@ -12,11 +9,7 @@ import {
   Left,
   Right
 } from "native-base";
-
-// Style
 import styles from "./styles";
-
-// Navigation
 import { withNavigation } from "react-navigation";
 import cartStore from "../../stores/cartStore";
 

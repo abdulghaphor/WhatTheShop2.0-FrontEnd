@@ -1,35 +1,41 @@
 import React, { Component } from "react";
 import { observer } from "mobx-react";
-
-// NativeBase Components
 import { Text, List, Button, Spinner, ListItem } from "native-base";
 import { withNavigation } from "react-navigation";
-
-// Component
 import CartItem from "./CartItem";
-
-//Store
 import cartStore from "../../stores/cartStore";
 import authStore from "../../stores/authStore";
 
 class CarCart extends Component {
-  componentDidMount = () => {
-    if (authStore.user && cartStore.loading === false) {
-      cartStore.fetchCart();
+  state = {
+    items: []
+  };
+  handleDelete = deletedItem => {
+    cartStore.removeItemFromCart(deletedItem);
+    const items = this.state.items.filter(item => item.id !== deletedItem.id);
+    this.setState({ items: items });
+  };
+  handleCheckout = async () => {
+    console.log("handlecheckout");
+    let xxx = await cartStore.checkoutCart();
+    if (xxx) {
+      this.setState({ items: [] });
     }
   };
-
-  render() {
-    const items = cartStore.cart;
-    let cartItems;
-    if (!cartStore.loading) {
-      cartItems = items.map(item => <CartItem item={cart} key={item.id} />);
+  componentWillMount = () => {
+    if (authStore.user && cartStore.loading === false) {
+      this.setState({ items: cartStore.items });
     }
+  };
+  render() {
+    cartItems = this.state.items.map(item => (
+      <CartItem item={item} key={item.id} onDelete={this.handleDelete} />
+    ));
 
     return (
       <List>
         {cartItems}
-        <Button full danger onPress={() => cartStore.checkoutCart()}>
+        <Button full danger onPress={() => this.handleCheckout()}>
           <Text>Checkout</Text>
         </Button>
       </List>

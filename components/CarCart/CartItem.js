@@ -1,37 +1,43 @@
 import React, { Component } from "react";
 
 // NativeBase Components
-import { Text, Left, Body, Right, Button, ListItem, Icon } from "native-base";
-import cartStore from "../../stores/cartStore";
-
+import {
+  Text,
+  Left,
+  Body,
+  Right,
+  Button,
+  ListItem,
+  Icon,
+  Thumbnail
+} from "native-base";
+import styles from "../CarList/styles";
 class CartItem extends Component {
+  state = {
+    item: null
+  };
+  componentWillMount = () => {
+    this.setState({ item: this.props.item });
+  };
   render() {
-    const { item } = this.props;
     return (
       <ListItem style={{ borderBottomWidth: 0 }}>
         <Left>
-          <Text style={{ color: "black", marginLeft: 16 }}>
-            {" "}
-            {cartStore.cart.product}{" "}
-          </Text>
+          <Thumbnail
+            bordered
+            source={{ uri: this.state.item.image }}
+            style={styles.thumbnail}
+          />
+          <Text style={{ color: "black", marginLeft: 16 }}></Text>
           <Text note style={{ marginLeft: 16 }}>
-            {cartStore.cart.unit_price}
+            {this.state.item.price}
           </Text>
         </Left>
-        <Body>
-          <Text style={{ color: "black" }}>
-            Quantity : {cartStore.cart.quantity}
-          </Text>
-        </Body>
-        <Body>
-          <Text style={{ color: "black" }}>
-            Quantity : {cartStore.cart.sub_total}
-          </Text>
-        </Body>
+        <Body></Body>
         <Right>
           <Button
             transparent
-            onPress={() => cartStore.removeItemFromCart(item)}
+            onPress={() => this.props.onDelete(this.state.item)}
           >
             <Icon name="trash" style={{ color: "blue", fontSize: 21 }} />
           </Button>
